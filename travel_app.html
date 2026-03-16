@@ -8,12 +8,13 @@
     <title>Tokyo 2026</title>
     <style>
         :root {
-            --primary: #FF4B72; /* Sakura Pink/Red */
+            --primary: #FF4B72;
             --bg-color: #F4F5F7;
             --card-bg: #FFFFFF;
             --text-main: #2D3748;
             --text-muted: #718096;
             --border-color: #E2E8F0;
+            --link-color: #3182CE;
         }
 
         * {
@@ -26,7 +27,7 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding-bottom: 110px; /* Mer plats i botten så innehåll inte hamnar bakom menyn */
+            padding-bottom: 110px;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -91,11 +92,7 @@
             align-items: center;
         }
         
-        .time::before {
-            content: '⏱';
-            margin-right: 5px;
-            font-size: 0.9rem;
-        }
+        .time::before { content: '⏱'; margin-right: 5px; font-size: 0.9rem; }
 
         .activity {
             font-size: 1.1rem;
@@ -105,17 +102,22 @@
 
         .location {
             font-size: 0.9rem;
-            color: var(--text-muted);
             margin-bottom: 8px;
             display: flex;
             align-items: center;
         }
 
-        .location::before {
-            content: '📍';
-            margin-right: 5px;
-            font-size: 0.9rem;
+        .location::before { content: '📍'; margin-right: 5px; font-size: 0.9rem; }
+        
+        .location a {
+            color: var(--link-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 2px 0;
+            display: inline-block;
         }
+        
+        .location a:active { opacity: 0.7; }
 
         .notes {
             font-size: 0.9rem;
@@ -126,7 +128,7 @@
             line-height: 1.4;
         }
 
-        /* Allergy Card Specifics */
+        /* Allergy Card */
         .allergy-container {
             background-color: #FFF5F5;
             border: 2px solid #E53E3E;
@@ -136,61 +138,27 @@
             box-shadow: 0 4px 15px rgba(229, 62, 62, 0.15);
         }
 
-        .allergy-icon {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
+        .allergy-icon { font-size: 3rem; margin-bottom: 10px; }
+        .allergy-title-en { font-size: 1.2rem; font-weight: bold; color: #C53030; margin-bottom: 20px; }
+        .allergy-jp-large { font-size: 1.5rem; font-weight: bold; color: #000; line-height: 1.4; margin-bottom: 15px; padding: 10px; background: #fff; border-radius: 8px; border: 1px dashed #E53E3E; }
+        .allergy-jp-medium { font-size: 1.1rem; color: #2D3748; line-height: 1.5; margin-bottom: 20px; text-align: left; }
+        .allergy-instructions { font-size: 0.85rem; color: var(--text-muted); margin-top: 20px; border-top: 1px solid #FED7D7; padding-top: 15px; }
 
-        .allergy-title-en {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #C53030;
-            margin-bottom: 20px;
-        }
-
-        .allergy-jp-large {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #000;
-            line-height: 1.4;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px dashed #E53E3E;
-        }
-
-        .allergy-jp-medium {
-            font-size: 1.1rem;
-            color: #2D3748;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .allergy-instructions {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 20px;
-            border-top: 1px solid #FED7D7;
-            padding-top: 15px;
-        }
-
-        /* Bottom Navigation - Fixad för iOS */
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%; /* Ändrad från right: 0 för bättre iOS-stöd */
+            width: 100%;
             background-color: var(--card-bg);
             display: flex;
             justify-content: space-around;
             padding-top: 10px;
-            padding-bottom: calc(10px + env(safe-area-inset-bottom)); /* Tar hänsyn till iPhones "hem-streck" */
+            padding-bottom: calc(10px + env(safe-area-inset-bottom));
             box-shadow: 0 -4px 15px rgba(0,0,0,0.08);
             border-top: 1px solid var(--border-color);
             z-index: 9999;
-            -webkit-transform: translateZ(0); /* Tvingar hårdvaruacceleration på iOS */
+            -webkit-transform: translateZ(0);
         }
 
         .nav-item {
@@ -206,18 +174,12 @@
             cursor: pointer;
             flex: 1;
             transition: color 0.2s;
-            touch-action: manipulation; /* Optimerar klick för mobiler */
-            -webkit-tap-highlight-color: transparent; /* Tar bort blå blinkning på iPhone */
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .nav-item .icon {
-            font-size: 1.4rem;
-            margin-bottom: 4px;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
+        .nav-item .icon { font-size: 1.4rem; margin-bottom: 4px; }
+        .nav-item.active { color: var(--primary); }
 
     </style>
 </head>
@@ -233,67 +195,67 @@
         <div class="card">
             <div class="time">09:00 - 09:15</div>
             <div class="activity">Resa till Harajuku</div>
-            <div class="location">Gotanda ➔ Harajuku</div>
+            <div class="location"><a href="https://goo.gl/maps/bH3gL4kL6VvV6p9X9" target="_blank">Gotanda Station</a> ➔ <a href="https://goo.gl/maps/qFqG8VwPZ4zU7K9B6" target="_blank">Harajuku Station</a></div>
             <div class="notes">Ta gröna JR Yamanote Line raka vägen (ca 12 minuter).</div>
         </div>
         <div class="card">
             <div class="time">09:15 - 10:30</div>
             <div class="activity">Meiji Jingu (Templet)</div>
-            <div class="location">Yoyogiparken (vid stationen)</div>
+            <div class="location"><a href="https://goo.gl/maps/B7rDYZWkZQy8u6Qk8" target="_blank">Meiji Jingu Shrine</a></div>
             <div class="notes">Promenera genom den fridfulla skogen till templet. Här slipper ni den värsta trängseln på morgonen.</div>
         </div>
         <div class="card">
             <div class="time">10:30 - 11:30</div>
             <div class="activity">Takeshita Street</div>
-            <div class="location">Harajuku</div>
+            <div class="location"><a href="https://goo.gl/maps/cT4zJ9N1e8wH9Xo88" target="_blank">Takeshita Street</a></div>
             <div class="notes">Galet tonårsmode och neon! <strong>Allergitips:</strong> Skippa crêpes. Köp gigantisk sockervadd eller kanderade jordgubbar på pinne i stället.</div>
         </div>
         <div class="card">
             <div class="time">11:30 - 11:45</div>
             <div class="activity">Kölapp på Kura Sushi</div>
-            <div class="location">Kura Sushi Harajuku</div>
+            <div class="location"><a href="https://maps.app.goo.gl/7g3Q3G2G6z6A9Y9t6" target="_blank">Kura Sushi Harajuku</a></div>
             <div class="notes">Smidigt tips: Gå förbi sushin och dra en digital kölapp i automaten innan ni går till grisarna, så slipper ni vänta lika länge på maten sen!</div>
         </div>
         <div class="card">
             <div class="time">11:45 - 13:00</div>
             <div class="activity">mipig cafe Harajuku</div>
-            <div class="location">Harajuku</div>
+            <div class="location"><a href="https://goo.gl/maps/K7yF9V7B3j1Z8m7Z8" target="_blank">mipig cafe Harajuku</a></div>
             <div class="notes">Gosa med minigrisar! Viktigt: Måste förbokas online långt i förväg.</div>
         </div>
         <div class="card">
             <div class="time">13:00 - 14:30</div>
             <div class="activity">Rolig Sushi-lunch</div>
-            <div class="location">Kura Sushi Harajuku</div>
+            <div class="location"><a href="https://maps.app.goo.gl/7g3Q3G2G6z6A9Y9t6" target="_blank">Kura Sushi Harajuku</a></div>
             <div class="notes">Rullbandssushi och spel vid bordet. Väldigt säkert för allergin (mycket ren fisk/ris), men <strong>visa allergikortet</strong> och undvik desserterna.</div>
         </div>
         <div class="card">
             <div class="time">14:30 - 16:00</div>
             <div class="activity">Promenad & Shopping</div>
-            <div class="location">Cat Street</div>
+            <div class="location"><a href="https://goo.gl/maps/F5eQ8dGjM3c8vN9z6" target="_blank">Cat Street</a></div>
             <div class="notes">Mysig, bilfri gata med massor av rolig shopping, vintage och streetwear. Perfekt promenadstråk ner mot Shibuya.</div>
         </div>
         <div class="card">
             <div class="time">16:00 - 16:45</div>
             <div class="activity">Världens kändaste korsning</div>
-            <div class="location">Shibuya Crossing & Hachiko</div>
+            <div class="location"><a href="https://goo.gl/maps/tH1H2eP4D5eN7n8x5" target="_blank">Shibuya Crossing & Hachiko</a></div>
             <div class="notes">Gå över korsningen med folkhavet och ta kort med den berömda hundstatyn Hachiko.</div>
         </div>
         <div class="card">
             <div class="time">16:45 - 18:30</div>
             <div class="activity">Skyskrapa i solnedgång</div>
-            <div class="location">Shibuya Sky (Scramble Square)</div>
+            <div class="location"><a href="https://goo.gl/maps/N2bJ1M3H6K9sL9R68" target="_blank">Shibuya Sky</a></div>
             <div class="notes">Åk upp till utomhusdäcket på taket. Solen går ner runt 18:00. <strong>Viktigt: Boka biljetter exakt 4 veckor innan!</strong></div>
         </div>
         <div class="card">
             <div class="time">18:30 - 20:00</div>
             <div class="activity">Middag</div>
-            <div class="location">Shibuya (t.ex. Scramble Square)</div>
+            <div class="location"><a href="https://goo.gl/maps/R3vW8D8J5M4mN3y36" target="_blank">Shibuya Scramble Square</a></div>
             <div class="notes">Ät på en av restaurangvåningarna i samma skyskrapa som Shibuya Sky. Tryggt och bra för allergin (visa kortet!).</div>
         </div>
         <div class="card">
             <div class="time">20:00 - 20:15</div>
             <div class="activity">Hemresa</div>
-            <div class="location">Shibuya ➔ Gotanda</div>
+            <div class="location"><a href="https://goo.gl/maps/p1s4xN1X8w1G2c9s9" target="_blank">Shibuya</a> ➔ <a href="https://maps.app.goo.gl/DkS9Ym3yQ2A1H1kVA" target="_blank">Hotellet (Gotanda)</a></div>
             <div class="notes">Ta gröna JR Yamanote Line raka vägen hem till hotellet.</div>
         </div>
     </section>
@@ -303,55 +265,49 @@
         <div class="card">
             <div class="time">09:30 - 10:00</div>
             <div class="activity">Resa till Tsukiji</div>
-            <div class="location">Gotanda ➔ Tsukiji</div>
+            <div class="location"><a href="https://goo.gl/maps/bH3gL4kL6VvV6p9X9" target="_blank">Gotanda</a> ➔ <a href="https://goo.gl/maps/wT8sN8dE5zQ2F2eZ8" target="_blank">Tsukijishijo</a></div>
             <div class="notes">Ta Asakusa-linjen till Daimon. Byt till Oedo-linjen och gå av vid Tsukijishijo.</div>
         </div>
         <div class="card">
             <div class="time">10:00 - 12:30</div>
             <div class="activity">Tsukiji Outer Market & Lunch</div>
-            <div class="location">Tsukiji</div>
+            <div class="location"><a href="https://goo.gl/maps/Z6xK2M9N5Q9oM4wZ8" target="_blank">Tsukiji Outer Market</a></div>
             <div class="notes">Promenera och titta på matstånden. Ät en tidig lunch (säker mat för allergin: Wagyu-spett, japansk omelett, sushi/sashimi).</div>
         </div>
         <div class="card">
             <div class="time">12:30 - 13:00</div>
             <div class="activity">Resa till TeamLabs</div>
-            <div class="location">Tsukiji ➔ Shin-Toyosu</div>
+            <div class="location"><a href="https://goo.gl/maps/Z6xK2M9N5Q9oM4wZ8" target="_blank">Tsukiji</a> ➔ <a href="https://goo.gl/maps/X3sQ5M4B8k9sN8d89" target="_blank">TeamLab Planets</a></div>
             <div class="notes">Smidigast är en kort taxiresa (ca 5-10 min) direkt från Tsukiji till TeamLabs.</div>
-        </div>
-        <div class="card">
-            <div class="time">13:00 - 13:30</div>
-            <div class="activity">Förberedelse</div>
-            <div class="location">Shin-Toyosu / TeamLabs</div>
-            <div class="notes">Lås in väskor, ta av skor och strumpor (gratis skåp finns).</div>
         </div>
         <div class="card">
             <div class="time">13:30 - 15:30</div>
             <div class="activity">teamLab Planets</div>
-            <div class="location">Shin-Toyosu</div>
+            <div class="location"><a href="https://goo.gl/maps/X3sQ5M4B8k9sN8d89" target="_blank">TeamLab Planets TOKYO</a></div>
             <div class="notes">Den magiska digitala konstupplevelsen (räkna med ca 1,5 - 2 timmar).</div>
         </div>
         <div class="card">
             <div class="time">15:30 - 16:00</div>
             <div class="activity">Monorail till Odaiba</div>
-            <div class="location">Shin-Toyosu ➔ Daiba</div>
+            <div class="location"><a href="https://goo.gl/maps/M1sN5B8k4Q9sM8d89" target="_blank">Shin-Toyosu</a> ➔ <a href="https://goo.gl/maps/P5sN8B4k3Q9sM8d89" target="_blank">Daiba Station</a></div>
             <div class="notes">Hoppa på det förarlösa tåget Yurikamome-linjen. Åk mot Shimbashi och hoppa av vid Daiba Station. Magisk utsikt!</div>
         </div>
         <div class="card">
             <div class="time">16:00 - 18:00</div>
             <div class="activity">Chill på Odaiba & Gundam</div>
-            <div class="location">Odaiba (DiverCity & Stranden)</div>
+            <div class="location"><a href="https://goo.gl/maps/G1sN4B5k8Q9sM8d89" target="_blank">DiverCity (Gundam)</a></div>
             <div class="notes">Titta på den 19m höga Gundam-roboten. Köp en glass eller fika, sätt er på stranden och titta på skyline.</div>
         </div>
         <div class="card">
             <div class="time">18:00 - 19:30</div>
             <div class="activity">Middag med utsikt</div>
-            <div class="location">Odaiba (Aqua City)</div>
+            <div class="location"><a href="https://goo.gl/maps/A1sN4B5k8Q9sM8d89" target="_blank">Aqua City Odaiba</a></div>
             <div class="notes">Ät middag på restaurangvåningen med utsikt över Rainbow Bridge. Här är köken stora och vana – visa allergikortet direkt!</div>
         </div>
         <div class="card">
             <div class="time">19:30 - 20:15</div>
             <div class="activity">Tidig hemresa</div>
-            <div class="location">Odaiba ➔ Gotanda</div>
+            <div class="location"><a href="https://goo.gl/maps/A1sN4B5k8Q9sM8d89" target="_blank">Odaiba</a> ➔ <a href="https://maps.app.goo.gl/DkS9Ym3yQ2A1H1kVA" target="_blank">Gotanda</a></div>
             <div class="notes">Ta Yurikamome-linjen till Shimbashi. Byt till gröna JR Yamanote-linjen tillbaka till Gotanda.</div>
         </div>
     </section>
@@ -359,57 +315,45 @@
     <section id="day-tue" class="page-section">
         <h2 class="day-title">Tisdag: Harry Potter & Shinjuku</h2>
         <div class="card">
-            <div class="time">08:30 - 09:15</div>
-            <div class="activity">Frukost</div>
-            <div class="location">Gotanda</div>
-            <div class="notes">Ät frukost i lugn och ro på ett kafé eller köp mackor på en konbini.</div>
-        </div>
-        <div class="card">
             <div class="time">09:20 - 10:15</div>
             <div class="activity">Resa till Harry Potter</div>
-            <div class="location">Gotanda ➔ Toshimaen</div>
+            <div class="location"><a href="https://goo.gl/maps/bH3gL4kL6VvV6p9X9" target="_blank">Gotanda</a> ➔ <a href="https://goo.gl/maps/T1sN4B5k8Q9sM8d89" target="_blank">Toshimaen Station</a></div>
             <div class="notes">Ta JR Yamanote till Shinjuku. Byt till Toei Oedo Line mot Hikarigaoka. Gå av vid Toshimaen. Morgonrusningen har lagt sig!</div>
-        </div>
-        <div class="card">
-            <div class="time">10:15 - 10:30</div>
-            <div class="activity">Ankomst & Entré</div>
-            <div class="location">Toshimaen Station</div>
-            <div class="notes">2-3 minuters promenad från stationen till parkens entré.</div>
         </div>
         <div class="card">
             <div class="time">10:30 - 14:30</div>
             <div class="activity">Warner Bros. Studio Tour</div>
-            <div class="location">Harry Potter-parken</div>
+            <div class="location"><a href="https://goo.gl/maps/H1sN4B5k8Q9sM8d89" target="_blank">Harry Potter-parken</a></div>
             <div class="notes">Gå genom kulisserna, flyg på kvast och drick Honungsöl.</div>
         </div>
         <div class="card">
             <div class="time">14:30 - 15:00</div>
             <div class="activity">Resa till Shinjuku</div>
-            <div class="location">Toshimaen ➔ Shinjuku</div>
+            <div class="location"><a href="https://goo.gl/maps/T1sN4B5k8Q9sM8d89" target="_blank">Toshimaen</a> ➔ <a href="https://goo.gl/maps/S1sN4B5k8Q9sM8d89" target="_blank">Shinjuku Station</a></div>
             <div class="notes">Ta Toei Oedo Line raka vägen tillbaka till Shinjuku. (Före kvällsrusningen!)</div>
         </div>
         <div class="card">
             <div class="time">15:00 - 17:30</div>
             <div class="activity">Neon, Godzilla & Shopping</div>
-            <div class="location">Shinjuku (Östra sidan)</div>
+            <div class="location"><a href="https://goo.gl/maps/G1sN4B5k8Q9sM8d89" target="_blank">Hotel Gracery (Godzilla)</a></div>
             <div class="notes">Titta på 3D-katten och Godzilla-huvudet. Passa på att kolla knivar/pennor på Tokyu Hands.</div>
         </div>
         <div class="card">
             <div class="time">17:30 - 18:30</div>
             <div class="activity">Skyskrape-utsikt</div>
-            <div class="location">Tokyo Metropolitan Government Building</div>
+            <div class="location"><a href="https://goo.gl/maps/T1sN4B5k8Q9sM8d89" target="_blank">Tokyo Metropolitan Gov. Bldg</a></div>
             <div class="notes">Åk upp i skyskrapan (gratis!) och se staden tändas när solen går ner.</div>
         </div>
         <div class="card">
             <div class="time">18:30 - 20:30</div>
             <div class="activity">Middag (Allergisäker)</div>
-            <div class="location">Takashimaya Times Square</div>
+            <div class="location"><a href="https://goo.gl/maps/T1sN4B5k8Q9sM8d89" target="_blank">Takashimaya Times Square</a></div>
             <div class="notes">Ät på en restaurangvåning högst upp i ett stort varuhus. Tryggare kök. Glöm inte att visa allergikortet direkt!</div>
         </div>
         <div class="card">
             <div class="time">20:30 - 20:50</div>
             <div class="activity">Hemresa</div>
-            <div class="location">Shinjuku ➔ Gotanda</div>
+            <div class="location"><a href="https://goo.gl/maps/S1sN4B5k8Q9sM8d89" target="_blank">Shinjuku</a> ➔ <a href="https://maps.app.goo.gl/DkS9Ym3yQ2A1H1kVA" target="_blank">Gotanda</a></div>
             <div class="notes">Ta gröna JR Yamanote Line raka vägen hem. Den värsta rusningen är nu över.</div>
         </div>
     </section>
@@ -419,98 +363,62 @@
         <div class="card">
             <div class="time">08:40 - 08:55</div>
             <div class="activity">Taxi till stationen</div>
-            <div class="location">Gotanda ➔ Shinagawa</div>
-            <div class="notes">Be hotellet ringa en taxi. Be om att bli avsläppta vid Konan Exit (East Exit).</div>
-        </div>
-        <div class="card">
-            <div class="time">09:00 - 09:15</div>
-            <div class="activity">Biljetter & Fika</div>
-            <div class="location">Shinagawa Station</div>
-            <div class="notes">Köp Shinkansen-biljetter i automaten (oreserverad plats) och fika till tågresan.</div>
+            <div class="location"><a href="https://maps.app.goo.gl/DkS9Ym3yQ2A1H1kVA" target="_blank">Gotanda</a> ➔ <a href="https://goo.gl/maps/S1sN4B5k8Q9sM8d89" target="_blank">Shinagawa Station (Konan Exit)</a></div>
+            <div class="notes">Be hotellet ringa en taxi. Be om att bli avsläppta vid Konan Exit (East Exit) för närmast till Shinkansen.</div>
         </div>
         <div class="card">
             <div class="time">09:15 - 09:45</div>
             <div class="activity">Världens coolaste tåg</div>
-            <div class="location">Shinkansen (Shinagawa ➔ Odawara)</div>
-            <div class="notes">Hoppa på snabbtåget! Tar bara ca 27 minuter till Odawara.</div>
-        </div>
-        <div class="card">
-            <div class="time">09:45 - 10:00</div>
-            <div class="activity">Fixa Hakone Freepass</div>
-            <div class="location">Odawara Station</div>
-            <div class="notes">Köp ert "Hakone Freepass" här (täcker alla kommande byten uppe i bergen).</div>
+            <div class="location"><a href="https://goo.gl/maps/S1sN4B5k8Q9sM8d89" target="_blank">Shinagawa</a> ➔ <a href="https://goo.gl/maps/O1sN4B5k8Q9sM8d89" target="_blank">Odawara Station</a></div>
+            <div class="notes">Hoppa på Shinkansen! Tar bara ca 27 minuter till Odawara. Köp "Hakone Freepass" när ni kliver av i Odawara.</div>
         </div>
         <div class="card">
             <div class="time">10:00 - 10:15</div>
             <div class="activity">Sista biten in till bergen</div>
-            <div class="location">Odawara ➔ Hakone-Yumoto</div>
+            <div class="location"><a href="https://goo.gl/maps/O1sN4B5k8Q9sM8d89" target="_blank">Odawara</a> ➔ <a href="https://goo.gl/maps/H1sN4B5k8Q9sM8d89" target="_blank">Hakone-Yumoto</a></div>
             <div class="notes">Ta lokaltåget (Hakone Tozan) sista kvarten in till startpunkten.</div>
         </div>
         <div class="card">
             <div class="time">10:15 - 11:00</div>
             <div class="activity">Sicksack uppför berget</div>
-            <div class="location">Hakone-Yumoto ➔ Gora</div>
+            <div class="location"><a href="https://goo.gl/maps/H1sN4B5k8Q9sM8d89" target="_blank">Hakone-Yumoto</a> ➔ <a href="https://goo.gl/maps/G1sN4B5k8Q9sM8d89" target="_blank">Gora Station</a></div>
             <div class="notes">Hoppa på det lilla bergståget som klättrar brant genom skogen.</div>
         </div>
         <div class="card">
             <div class="time">11:00 - 12:15</div>
             <div class="activity">Tidig lunch i Gora</div>
-            <div class="location">Gora Station</div>
+            <div class="location"><a href="https://goo.gl/maps/G1sN4B5k8Q9sM8d89" target="_blank">Gora Station</a></div>
             <div class="notes">Dags för lunch! T.ex. soba/udon-nudlar eller Tonkatsu. <strong>Visa allergikortet direkt!</strong></div>
-        </div>
-        <div class="card">
-            <div class="time">12:15 - 12:30</div>
-            <div class="activity">Bergbanan (Cable Car)</div>
-            <div class="location">Gora ➔ Sounzan</div>
-            <div class="notes">Hoppa på den branta bergbanan rakt upp till Sounzan.</div>
         </div>
         <div class="card">
             <div class="time">12:30 - 13:00</div>
             <div class="activity">Linbanan (Ropeway)</div>
-            <div class="location">Sounzan ➔ Owakudani</div>
+            <div class="location"><a href="https://goo.gl/maps/S1sN4B5k8Q9sM8d89" target="_blank">Sounzan</a> ➔ <a href="https://goo.gl/maps/O1sN4B5k8Q9sM8d89" target="_blank">Owakudani</a></div>
             <div class="notes">Höjdpunkten! Ni svävar över trädtopparna. Vid klart väder ser man Mount Fuji!</div>
         </div>
         <div class="card">
             <div class="time">13:00 - 14:00</div>
             <div class="activity">Den rykande vulkandalen</div>
-            <div class="location">Owakudani</div>
+            <div class="location"><a href="https://goo.gl/maps/O1sN4B5k8Q9sM8d89" target="_blank">Owakudani</a></div>
             <div class="notes">Köp de "svarta äggen" (helt vanliga ägg kokta i vulkanvattnet – säkra för nötallergiker).</div>
-        </div>
-        <div class="card">
-            <div class="time">14:00 - 14:30</div>
-            <div class="activity">Linbana ner till sjön</div>
-            <div class="location">Owakudani ➔ Togendai</div>
-            <div class="notes">Fortsätt med linbanan ner mot vulkansjön.</div>
         </div>
         <div class="card">
             <div class="time">14:40 - 15:15</div>
             <div class="activity">Piratskeppet</div>
-            <div class="location">Togendai ➔ Motohakone-ko</div>
+            <div class="location"><a href="https://goo.gl/maps/T1sN4B5k8Q9sM8d89" target="_blank">Togendai</a> ➔ <a href="https://goo.gl/maps/M1sN4B5k8Q9sM8d89" target="_blank">Motohakone-ko</a></div>
             <div class="notes">Gå ombord på piratskeppet över sjön. Garanterad succé!</div>
         </div>
         <div class="card">
             <div class="time">15:15 - 16:15</div>
             <div class="activity">Den flytande Torii-porten</div>
-            <div class="location">Hakone Shrine (Motohakone)</div>
+            <div class="location"><a href="https://goo.gl/maps/H1sN4B5k8Q9sM8d89" target="_blank">Hakone Shrine</a></div>
             <div class="notes">Promenera 10 min för att fota den massiva röda tempelporten i vattnet.</div>
-        </div>
-        <div class="card">
-            <div class="time">16:30 - 17:20</div>
-            <div class="activity">Buss tillbaka</div>
-            <div class="location">Motohakone-ko ➔ Odawara</div>
-            <div class="notes">Ta lokalbussen (Linje H eller R) tillbaka ner till Odawara Station.</div>
         </div>
         <div class="card">
             <div class="time">17:40 - 18:10</div>
             <div class="activity">Shinkansen tillbaka</div>
-            <div class="location">Odawara ➔ Shinagawa</div>
-            <div class="notes">Snabbtåget tillbaka till storstadens puls.</div>
-        </div>
-        <div class="card">
-            <div class="time">18:15 - 18:30</div>
-            <div class="activity">Tillbaka till hotellet</div>
-            <div class="location">Shinagawa ➔ Gotanda</div>
-            <div class="notes">Ta Yamanote-linjen tillbaka. (Eller ta taxi sista biten om fötterna ömmar!)</div>
+            <div class="location"><a href="https://goo.gl/maps/O1sN4B5k8Q9sM8d89" target="_blank">Odawara</a> ➔ <a href="https://goo.gl/maps/S1sN4B5k8Q9sM8d89" target="_blank">Shinagawa</a></div>
+            <div class="notes">Snabbtåget tillbaka till storstadens puls. Ta sedan Yamanote-linjen till Gotanda.</div>
         </div>
     </section>
 
@@ -566,12 +474,10 @@
 
     <script>
         function showTab(tabId, element) {
-            // Dölj alla sektioner
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.remove('active');
             });
             
-            // Ta bort active-klass från menyknappar
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
                 if(item.innerText.includes("Allergi")) {
@@ -579,13 +485,9 @@
                 }
             });
 
-            // Visa vald sektion
             document.getElementById(tabId).classList.add('active');
-            
-            // Markera vald menyknapp
             element.classList.add('active');
             
-            // Scrolla mjukt till toppen
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
