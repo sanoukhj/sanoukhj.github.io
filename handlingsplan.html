@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Handlingsplan Anafylaxi</title>
+    <style>
+        :root {
+            --bg-color: #F4F5F7;
+            --card-bg: #FFFFFF;
+            --text-main: #2D3748;
+            --text-muted: #718096;
+            --warning-yellow: #FEFCBF;
+            --warning-yellow-border: #D69E2E;
+            --danger-red: #FFF5F5;
+            --danger-red-border: #E53E3E;
+            --danger-red-solid: #E53E3E;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 15px;
+            padding-bottom: 40px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Språk-logik */
+        :root[lang="sv"] .en, :root[lang="sv"] .jp { display: none !important; }
+        :root[lang="en"] .sv, :root[lang="en"] .jp { display: none !important; }
+        :root[lang="jp"] .sv, :root[lang="jp"] .en { display: none !important; }
+
+        .header-section {
+            background: var(--card-bg);
+            /* Ökat padding i toppen (55px) för att ge plats åt knapparna */
+            padding: 55px 20px 20px 20px; 
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            border-top: 5px solid #2B6CB0;
+            position: relative; 
+        }
+
+        /* HEM-KNAPP uppe till vänster */
+        .home-btn {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            background: #EDF2F7;
+            padding: 4px 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-btn:active {
+            transform: scale(0.95);
+            background: #E2E8F0;
+        }
+
+        /* Språkväljare uppe till höger */
+        .lang-switcher {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: 2px solid transparent;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            opacity: 0.5;
+        }
+
+        .lang-btn.active {
+            opacity: 1;
+            background-color: #EDF2F7;
+            border-color: #CBD5E0;
+            transform: scale(1.1);
+        }
+
+        .header-section h1 {
+            font-size: 1.4rem;
+            color: #2B6CB0;
+            margin-bottom: 15px;
+            margin-top: 0;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .patient-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .info-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .allergy-alert {
+            grid-column: span 2;
+            background: #EDF2F7;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #2B6CB0;
+            margin-top: 5px;
+        }
+
+        /* Milda symtom */
+        .mild-section {
+            background: var(--warning-yellow);
+            border: 2px solid var(--warning-yellow-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title.mild { color: #975A16; }
+        .section-title.severe { color: #C53030; }
+
+        .symptoms-list {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .action-box {
+            background: rgba(255,255,255,0.7);
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* Svåra symtom (Anafylaxi) */
+        .severe-section {
+            background: var(--danger-red);
+            border: 3px solid var(--danger-red-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.2);
+        }
+
+        .emergency-action {
+            background: var(--danger-red-solid);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .emergency-action span.big {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .instruction-list {
+            list-style: decimal;
+            padding-left: 20px;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .instruction-list li {
+            margin-bottom: 10px;
+        }
+
+        /* Japan Emergency Box */
+        .japan-alert {
+            background: #1A202C;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #E2E8F0;
+        }
+
+        .japan-alert h3 {
+            color: #FBD38D;
+            margin-bottom: 5px;
+        }
+
+        .japan-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--danger-red-solid);
+            letter-spacing: 2px;
+            margin: 5px 0;
+            background: white;
+            display: inline-block;
+            padding: 0 15px;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        
+        <a href="travel_app.html" class="home-btn" title="Tillbaka till schemat">🏠</a>
+
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="sv" onclick="changeLanguage('sv')">🇸🇪</button>
+            <button class="lang-btn" data-lang="en" onclick="changeLanguage('en')">🇬🇧</button>
+            <button class="lang-btn" data-lang="jp" onclick="changeLanguage('jp')">🇯🇵</button>
+        </div>
+
+        <h1 class="sv">Handlingsplan vid Anafylaxi</h1>
+        <h1 class="en">Anaphylaxis Action Plan</h1>
+        <h1 class="jp">アナフィラキシー対応アクションプラン</h1>
+        
+        <div class="patient-info">
+            <div>
+                <div class="info-label">
+                    <span class="sv">Namn</span>
+                    <span class="en">Name</span>
+                    <span class="jp">氏名</span>
+                </div>
+                <div class="info-value">Anton Johansson</div>
+            </div>
+            <div>
+                <div class="info-label">
+                    <span class="sv">Personnummer</span>
+                    <span class="en">ID / Date of birth</span>
+                    <span class="jp">生年月日 / ID</span>
+                </div>
+                <div class="info-value"></div>
+            </div>
+            <div>
+                <div class="info-label">
+                    <span class="sv">Vikt</span>
+                    <span class="en">Weight</span>
+                    <span class="jp">体重</span>
+                </div>
+                <div class="info-value">51 kg</div>
+            </div>
+            <div>
+                <div class="info-label">
+                    <span class="sv">Astma</span>
+                    <span class="en">Asthma</span>
+                    <span class="jp">喘息</span>
+                </div>
+                <div class="info-value">
+                    <span class="sv">Nej</span>
+                    <span class="en">No</span>
+                    <span class="jp">いいえ</span>
+                </div>
+            </div>
+            <div class="allergy-alert">
+                <div class="info-label">
+                    <span class="sv">Allergisk mot:</span>
+                    <span class="en">Severe allergy to:</span>
+                    <span class="jp">アレルギー原因物質：</span>
+                </div>
+                <div class="info-value" style="color: #C53030;">
+                    <span class="sv">Cashewnötter, Jordnötter</span>
+                    <span class="en">Cashew nuts, Peanuts</span>
+                    <span class="jp">カシューナッツ、ピーナッツ</span>
+                </div>
+            </div>
+            <div style="grid-column: span 2; margin-top: 10px; font-size: 0.85rem; color: #718096;">
+                <span class="sv">Utfärdad av: BUMM Lerum (231109)</span>
+                <span class="en">Issued by: Clinic BUMM Lerum, Sweden (231109)</span>
+                <span class="jp">発行機関： スウェーデン BUMM Lerum クリニック (2023年11月9日)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mild-section">
+        <div class="section-title mild">
+            <span class="sv">⚠️ Milda till måttliga symtom</span>
+            <span class="en">⚠️ Mild to moderate symptoms</span>
+            <span class="jp">⚠️ 軽度から中等度の症状</span>
+        </div>
+        <ul class="symptoms-list">
+            <li class="sv">Svullnad av läppar, ansikte, ögon</li>
+            <li class="sv">Klåda, nässelutslag</li>
+            <li class="sv">Buksmärta, kräkningar</li>
+
+            <li class="en">Swelling of lips, face, eyes</li>
+            <li class="en">Itching, hives</li>
+            <li class="en">Abdominal pain, vomiting</li>
+
+            <li class="jp">唇、顔、目の腫れ</li>
+            <li class="jp">かゆみ、じんましん</li>
+            <li class="jp">腹痛、嘔吐</li>
+        </ul>
+        <div class="action-box">
+            <div class="info-label">
+                <span class="sv">Ge omedelbart:</span>
+                <span class="en">Give immediately:</span>
+                <span class="jp">直ちに投与：</span>
+            </div>
+            <div style="font-size: 1.2rem; color: #975A16; margin-top: 5px;">
+                <span class="sv">💊 1 st Antihistamin tablett<br><strong>(Aerius 5 mg eller Desloratadin 5 mg)</strong></span>
+                <span class="en">💊 1 Antihistamine tablet<br><strong>(Aerius 5 mg or Desloratadine 5 mg)</strong></span>
+                <span class="jp">💊 抗ヒスタミン薬 1錠<br><strong>(Aerius 5mg または Desloratadine 5mg)</strong></span>
+            </div>
+        </div>
+        <div style="margin-top: 15px; font-weight: bold; font-size: 0.95rem; color: #744210;">
+            <span class="sv">Observera! Vid tecken på ytterligare försämring, följ instruktionerna för SVÅRA SYMTOM nedan.</span>
+            <span class="en">Attention! If symptoms worsen, follow the instructions for SEVERE SYMPTOMS below.</span>
+            <span class="jp">注意！ 症状が悪化する兆候がある場合は、以下の「重度の症状」の指示に従ってください。</span>
+        </div>
+    </div>
+
+    <div class="severe-section">
+        <div class="section-title severe">
+            <span class="sv">🚨 Svåra symtom (Anafylaxi)</span>
+            <span class="en">🚨 Severe symptoms (Anaphylaxis)</span>
+            <span class="jp">🚨 重度の症状（アナフィラキシー）</span>
+        </div>
+        <ul class="symptoms-list" style="color: #742A2A;">
+            <li class="sv">Hosta, pipande andning, svårt att andas</li>
+            <li class="sv">Svullnad i svalg, heshet</li>
+            <li class="sv">Blekhet, slapphet</li>
+            <li class="sv">Påverkat medvetande</li>
+
+            <li class="en">Coughing, wheezing, difficulty breathing</li>
+            <li class="en">Swelling in the throat, hoarseness</li>
+            <li class="en">Paleness, weakness/floppiness</li>
+            <li class="en">Altered consciousness / fainting</li>
+
+            <li class="jp">咳、喘鳴（ゼーゼーする呼吸）、呼吸困難</li>
+            <li class="jp">喉の腫れ、声のかすれ</li>
+            <li class="jp">顔面蒼白、ぐったりする</li>
+            <li class="jp">意識障害 / 気絶</li>
+        </ul>
+        
+        <div class="emergency-action">
+            <span class="big">
+                <span class="sv">💉 GE ADRENALIN!</span>
+                <span class="en">💉 GIVE ADRENALINE!</span>
+                <span class="jp">💉 アドレナリンを投与！</span>
+            </span>
+            <span class="sv">1 st Adrenalinpenna (Epipen 300 mikrogram)</span>
+            <span class="en">1 Adrenaline pen (Epipen 300 micrograms)</span>
+            <span class="jp">アドレナリン自己注射薬 1本 (エピペン 300 µg)</span>
+        </div>
+
+        <ol class="instruction-list">
+            <span class="sv">
+                <li>Ge injektion i lårets utsida. Adrenalinpennan kan ges genom kläderna.</li>
+                <li>Larma ambulans (Se nummer för Japan nedan) och uppge "Anafylaxi".</li>
+                <li>Lägg patienten ner med höjda ben. Om svårt att andas, låt patienten sitta upp.</li>
+                <li>Om ingen förbättring sker inom 5-15 minuter, ge ytterligare en Adrenalinpenna.</li>
+                <li>Ge därefter antihistamintablett. 2 tabletter á 5 mg.</li>
+                <li>Ge därefter kortisontablett (t.ex. Betapred). 10 tabletter á 0,5 mg (lös upp i lite vatten).</li>
+            </span>
+
+            <span class="en">
+                <li>Inject into the outer thigh. The adrenaline pen can be administered through clothing.</li>
+                <li>Call an ambulance (See Japan number below) and state "Anaphylaxis".</li>
+                <li>Lay the patient down with elevated legs. If breathing is difficult, let the patient sit up.</li>
+                <li>If there is no improvement within 5-15 minutes, give a second Adrenaline pen.</li>
+                <li>Then give antihistamine tablets. 2 tablets of 5 mg.</li>
+                <li>Then give cortisone tablets (e.g. Betapred). 10 tablets of 0.5 mg (dissolve in a little water).</li>
+            </span>
+
+            <span class="jp">
+                <li>太ももの外側に注射します。衣服の上からでも注射できます。</li>
+                <li>救急車を呼び（以下の日本の電話番号を参照）、「アナフィラキシーです」と伝えます。</li>
+                <li>足を高くして寝かせます。呼吸が苦しそうな場合は座らせます。</li>
+                <li>5～15分以内に改善が見られない場合は、もう1本アドレナリンを投与します。</li>
+                <li>その後、抗ヒスタミン薬を投与します。5mg錠を2錠。</li>
+                <li>その後、ステロイド剤（例: Betapred）を投与します。0.5mg錠を10錠（少量の水に溶かす）。</li>
+            </span>
+        </ol>
+    </div>
+
+    <div class="japan-alert">
+        <h3 class="sv">Larma Ambulans i Japan</h3>
+        <h3 class="en">Call Ambulance in Japan</h3>
+        <h3 class="jp">日本での救急車の呼び方</h3>
+        
+        <div>
+            <span class="sv">Ring omedelbart:</span>
+            <span class="en">Call immediately:</span>
+            <span class="jp">直ちに電話：</span>
+        </div>
+        <div class="japan-number">119</div>
+        <div style="margin-top: 10px; font-size: 1.1rem;">
+            <span class="sv">Säg:</span><span class="en">Say:</span><span class="jp">伝える言葉：</span> 
+            <strong>"Ambulance, Anaphylaxis!"</strong><br>
+            <span style="font-size: 0.9rem; color: #A0AEC0;">
+                <span class="sv">(Japanska uttalet: <em>Kyūkyūsha, Anafirakishī!</em>)</span>
+                <span class="en">(Japanese pronunciation: <em>Kyūkyūsha, Anafirakishī!</em>)</span>
+                <span class="jp">（日本語発音：Kyūkyūsha, Anafirakishī!）</span>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        function changeLanguage(langCode) {
+            document.documentElement.lang = langCode;
+
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.getAttribute('data-lang') === langCode) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

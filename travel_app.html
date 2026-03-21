@@ -48,7 +48,7 @@
         .header-left, .header-right {
             display: flex;
             align-items: center;
-            width: 90px; 
+            width: 135px; /* Uppdaterad bredd för att få plats med tre knappar */
         }
 
         .header-left {
@@ -80,7 +80,26 @@
             transform: scale(0.95);
             background: #FED7D7;
         }
+/* Ny design för SOS-knappen */
+        .header-sos-btn {
+            background: #E53E3E; /* Illröd bakgrund */
+            border: 1px solid #C53030;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            padding: 4px 8px;
+            cursor: pointer;
+            text-decoration: none; /* Tar bort understrykning på länken */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(229, 62, 62, 0.4);
+            transition: transform 0.1s, background 0.1s;
+        }
 
+        .header-sos-btn:active {
+            transform: scale(0.95);
+            background: #C53030;
+        }
         header h1 {
             font-size: 1.2rem;
             color: var(--primary);
@@ -262,10 +281,11 @@
         <button class="menu-item" onclick="showTab('day-sun2', this)"><span class="icon">🇸🇪</span> 12 Apr - Hemma</button>
     </nav>
 
-    <header>
+<header>
         <div class="header-left">
             <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
             <button class="header-allergy-btn" onclick="showTab('allergy', this)" title="Allergikort">⚠️</button>
+            <a href="handlingsplan.html" class="header-sos-btn" title="Handlingsplan Anafylaxi">🆘</a>
         </div>
         <h1>Tokyo Äventyr</h1>
         <div class="header-right"></div>
