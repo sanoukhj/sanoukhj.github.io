@@ -48,7 +48,7 @@
         .header-left, .header-right {
             display: flex;
             align-items: center;
-            width: 135px; /* Uppdaterad bredd för att få plats med tre knappar */
+            width: 180px; /* Uppdaterad bredd för att få plats med fyra knappar */
         }
 
         .header-left {
@@ -64,7 +64,21 @@
             padding: 2px;
             touch-action: manipulation;
         }
+        .header-notes-btn {
+            background: #FFF5F5;
+            border: 1px solid #FC8181;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            padding: 4px 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(229, 62, 62, 0.15);
+            transition: transform 0.1s, background 0.1s;
+        }
 
+        .header-notes-btn:active {
+            transform: scale(0.95);
+            background: #FED7D7;
+        }
         .header-allergy-btn {
             background: #FFF5F5;
             border: 1px solid #FC8181;
@@ -284,6 +298,7 @@
 <header>
         <div class="header-left">
             <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+            <a href="https://keep.google.com/u/0/#NOTE/18ffCFaCslSVlVhFrW5QJF8YYZHtsdeZ4RxXpqtPBt37OicVj0lyXLOQi_wnG9WY" class="header-notess-btn" title="Notes">📝</a>
             <button class="header-allergy-btn" onclick="showTab('allergy', this)" title="Allergikort">⚠️</button>
             <a href="handlingsplan.html" class="header-sos-btn" title="Handlingsplan Anafylaxi">🆘</a>
         </div>
