@@ -48,7 +48,7 @@
         .header-left, .header-right {
             display: flex;
             align-items: center;
-            width: 180px; /* Uppdaterad bredd för att få plats med fyra knappar */
+            width: 180px; 
         }
 
         .header-left {
@@ -64,6 +64,7 @@
             padding: 2px;
             touch-action: manipulation;
         }
+        
         .header-notes-btn {
             background: #FFF5F5;
             border: 1px solid #FC8181;
@@ -71,6 +72,7 @@
             font-size: 1.3rem;
             padding: 4px 8px;
             cursor: pointer;
+            text-decoration: none;
             box-shadow: 0 2px 5px rgba(229, 62, 62, 0.15);
             transition: transform 0.1s, background 0.1s;
         }
@@ -79,6 +81,7 @@
             transform: scale(0.95);
             background: #FED7D7;
         }
+
         .header-allergy-btn {
             background: #FFF5F5;
             border: 1px solid #FC8181;
@@ -94,15 +97,16 @@
             transform: scale(0.95);
             background: #FED7D7;
         }
-/* Ny design för SOS-knappen */
+
+        /* Ny design för SOS-knappen */
         .header-sos-btn {
-            background: #E53E3E; /* Illröd bakgrund */
+            background: #E53E3E;
             border: 1px solid #C53030;
             border-radius: 8px;
             font-size: 1.3rem;
             padding: 4px 8px;
             cursor: pointer;
-            text-decoration: none; /* Tar bort understrykning på länken */
+            text-decoration: none; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -114,6 +118,7 @@
             transform: scale(0.95);
             background: #C53030;
         }
+
         header h1 {
             font-size: 1.2rem;
             color: var(--primary);
@@ -160,6 +165,16 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+        }
+
+        .menu-divider {
+            padding: 15px 20px 5px 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: bold;
+            background: #F4F5F7;
+            border-top: 1px solid var(--border-color);
         }
 
         .menu-item {
@@ -272,6 +287,50 @@
         .allergy-jp-medium { font-size: 1.1rem; color: #2D3748; line-height: 1.5; margin-bottom: 20px; text-align: left; }
         .allergy-instructions { font-size: 0.85rem; color: var(--text-muted); margin-top: 20px; border-top: 1px solid #FED7D7; padding-top: 15px; }
 
+        /* --- TAXIKORT (LANDSKAPSLÄGE) --- */
+        .taxi-landscape-container {
+            position: relative;
+            height: calc(100vh - 140px); /* Fyller skärmen under headern */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .taxi-inner {
+            background: #FFDF00; /* Klassisk taxi-gul */
+            border: 4px solid #222;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            
+            /* Tvingar landskapsläge i porträtt-telefoner */
+            width: 82vh; 
+            height: 82vw;
+            transform: rotate(90deg);
+        }
+
+        /* Om telefonen faktiskt hålls i landskapsläge */
+        @media screen and (orientation: landscape) {
+            .taxi-inner {
+                width: 90vw;
+                height: auto;
+                min-height: 70vh;
+                transform: none;
+            }
+        }
+
+        .taxi-instruction { font-size: 1.1rem; color: #D32F2F; margin-bottom: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .taxi-jp-name { font-size: 2.6rem; font-weight: 900; color: #000; margin-bottom: 10px; line-height: 1.1; }
+        .taxi-jp-addr { font-size: 1.6rem; font-weight: 700; color: #222; margin-bottom: 25px; line-height: 1.3;}
+        .taxi-en { font-size: 1.1rem; color: #444; margin-bottom: 15px; }
+        .taxi-tel { font-size: 1.6rem; font-weight: bold; color: #E53E3E; background: #fff; padding: 5px 15px; border-radius: 8px; border: 2px solid #E53E3E;}
+
     </style>
 </head>
 <body>
@@ -293,12 +352,16 @@
         <button class="menu-item" onclick="showTab('day-fri2', this)"><span class="icon">✨</span> 10 Apr - Bonusdag</button>
         <button class="menu-item" onclick="showTab('day-sat2', this)"><span class="icon">🛫</span> 11 Apr - Hemresa</button>
         <button class="menu-item" onclick="showTab('day-sun2', this)"><span class="icon">🇸🇪</span> 12 Apr - Hemma</button>
+        
+        <div class="menu-divider">Taxi-Adresser (Visa Chaufför)</div>
+        <button class="menu-item" onclick="showTab('taxi-gotanda', this)"><span class="icon">🚕</span> Gotanda Hotel</button>
+        <button class="menu-item" onclick="showTab('taxi-ana', this)"><span class="icon">🚕</span> ANA InterContinental</button>
     </nav>
 
-<header>
+    <header>
         <div class="header-left">
             <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
-            <a href="https://keep.google.com/u/0/#NOTE/18ffCFaCslSVlVhFrW5QJF8YYZHtsdeZ4RxXpqtPBt37OicVj0lyXLOQi_wnG9WY" class="header-notess-btn" title="Notes">📝</a>
+            <a href="https://keep.google.com/u/0/#NOTE/18ffCFaCslSVlVhFrW5QJF8YYZHtsdeZ4RxXpqtPBt37OicVj0lyXLOQi_wnG9WY" class="header-notes-btn" title="Notes" target="_blank">📝</a>
             <button class="header-allergy-btn" onclick="showTab('allergy', this)" title="Allergikort">⚠️</button>
             <a href="handlingsplan.html" class="header-sos-btn" title="Handlingsplan Anafylaxi">🆘</a>
         </div>
@@ -710,6 +773,30 @@
             </div>
         </section>
 
+        <section id="taxi-gotanda" class="page-section">
+            <div class="taxi-landscape-container">
+                <div class="taxi-inner">
+                    <div class="taxi-instruction">Taxi Address (Please drive to:)</div>
+                    <div class="taxi-jp-name">三井ガーデンホテル五反田</div>
+                    <div class="taxi-jp-addr">東京都品川区東五反田2-2-6</div>
+                    <div class="taxi-en">Mitsui Garden Hotel Gotanda<br>2-2-6 Higashi-gotanda, Shinagawa-ku, Tokyo 141-0022</div>
+                    <div class="taxi-tel">TEL: 03-3441-3331</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="taxi-ana" class="page-section">
+            <div class="taxi-landscape-container">
+                <div class="taxi-inner">
+                    <div class="taxi-instruction">Taxi Address (Please drive to:)</div>
+                    <div class="taxi-jp-name">ANAインターコンチネンタルホテル東京</div>
+                    <div class="taxi-jp-addr">東京都港区赤坂1-12-33</div>
+                    <div class="taxi-en">ANA InterContinental Tokyo<br>1-12-33 Akasaka, Minato-ku, Tokyo</div>
+                    <div class="taxi-tel">TEL: 03-3505-1111</div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <script>
@@ -755,7 +842,7 @@
             const m = today.getMonth() + 1; 
             const d = today.getDate();
 
-            let tabToOpen = 'day-fri1'; // Standardflik (öppnas om man kollar långt i förväg)
+            let tabToOpen = 'day-fri1'; // Standardflik
 
             if (y === 2026 && m === 4) {
                 if (d === 3) tabToOpen = 'day-fri1';
