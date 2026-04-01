@@ -48,11 +48,16 @@
         .header-left, .header-right {
             display: flex;
             align-items: center;
-            width: 180px; 
+            width: 140px; 
         }
 
         .header-left {
-            gap: 12px;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+        
+        .header-right {
+            justify-content: flex-end; /* Trycker SOS-knappen till höger */
         }
 
         .hamburger-btn {
@@ -127,6 +132,7 @@
             letter-spacing: 1px;
             text-align: center;
             flex-grow: 1;
+            white-space: nowrap; /* Hindrar rubriken från att brytas fult */
         }
 
         /* Sidomeny (Drawer) */
@@ -363,10 +369,11 @@
             <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
             <a href="https://keep.google.com/u/0/#NOTE/18ffCFaCslSVlVhFrW5QJF8YYZHtsdeZ4RxXpqtPBt37OicVj0lyXLOQi_wnG9WY" class="header-notes-btn" title="Notes" target="_blank">📝</a>
             <button class="header-allergy-btn" onclick="showTab('allergy', this)" title="Allergikort">⚠️</button>
-            <a href="handlingsplan.html" class="header-sos-btn" title="Handlingsplan Anafylaxi">🆘</a>
         </div>
         <h1>Tokyo Äventyr</h1>
-        <div class="header-right"></div>
+        <div class="header-right">
+            <a href="handlingsplan.html" class="header-sos-btn" title="Handlingsplan Anafylaxi">🆘</a>
+        </div>
     </header>
 
     <main>
