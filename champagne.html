@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sv" class="h-full bg-neutral-900 text-stone-900">
+<html lang="sv" class="h-full bg-neutral-950 text-neutral-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,25 +8,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Pinyon+Script&family=Alex+Brush&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        parchment: '#f7f4ed',
-                        paperDark: '#ebe4d5',
-                        goldLeaf: '#c5a059',
-                        goldBorder: '#d4af37',
-                        ink: '#2c2523',
-                        roseDust: '#c87d88',
-                        noirDark: '#1a1818'
+                        gold: {
+                            100: '#fef9c3',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                        },
+                        rose: {
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        }
                     },
                     fontFamily: {
-                        script: ['"Pinyon Script"', 'cursive'],
-                        accentScript: ['"Alex Brush"', 'cursive'],
-                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        serif: ['Cinzel', 'Georgia', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
                     }
                 }
             }
@@ -34,141 +38,68 @@
     </script>
     <style>
         body {
-            background-color: #121110;
-            background-image: radial-gradient(#24201d 1px, transparent 0);
-            background-size: 24px 24px;
-            font-family: 'Cormorant Garamond', serif;
+            touch-action: pan-y;
+            overflow-x: hidden;
+            background: radial-gradient(circle at top center, #1c1813 0%, #0a0a0a 100%);
         }
-
-        .paper-card {
-            background-color: #f7f4ed;
-            background-image: 
-                radial-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 0),
-                linear-gradient(to bottom, #fcfaf5 0%, #f3ede2 100%);
-            background-size: 16px 16px, 100% 100%;
-            box-shadow: 
-                0 15px 35px -5px rgba(0, 0, 0, 0.6),
-                0 0 0 1px rgba(197, 160, 89, 0.3),
-                inset 0 0 80px rgba(197, 160, 89, 0.08);
-            position: relative;
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 27, 22, 0.7) 0%, rgba(15, 15, 15, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(234, 179, 8, 0.05);
         }
-
-        /* Gold Ornate Corner Frames */
-        .corner-ornament {
-            position: absolute;
-            width: 28px;
-            height: 28px;
-            border-color: #c5a059;
-            pointer-events: none;
-            opacity: 0.8;
-        }
-        .corner-tl { top: 12px; left: 12px; border-top: 2px solid; border-left: 2px solid; }
-        .corner-tr { top: 12px; right: 12px; border-top: 2px solid; border-right: 2px solid; }
-        .corner-bl { bottom: 12px; left: 12px; border-bottom: 2px solid; border-left: 2px solid; }
-        .corner-br { bottom: 12px; right: 12px; border-bottom: 2px solid; border-right: 2px solid; }
-
-        /* Gold inner line frame */
-        .inner-frame {
-            border: 1px solid rgba(197, 160, 89, 0.4);
-            margin: 6px;
-            height: calc(100% - 12px);
-            pointer-events: none;
-        }
-
-        .gold-shimmer {
-            background: linear-gradient(135deg, #8a6d3b 0%, #c5a059 50%, #735728 100%);
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FDE047 50%, #CA8A04 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .handwritten {
-            font-family: 'Pinyon Script', cursive;
-            line-height: 1.1;
-        }
-
-        .page-transition {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        .card-transition {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
     </style>
 </head>
-<body class="h-full flex flex-col justify-between text-ink selection:bg-goldLeaf selection:text-white">
+<body class="h-full flex flex-col font-sans text-neutral-200 antialiased selection:bg-gold-500 selection:text-black justify-between">
 
-    <!-- Header -->
-    <header class="w-full py-6 px-4 text-center border-b border-goldLeaf/20 bg-neutral-950/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-md mx-auto flex items-center justify-between">
-            <div class="text-left">
-                <span class="block handwritten text-2xl text-goldLeaf leading-none">Anetts champagnelista</span>
-                <h1 class="font-serif font-semibold text-lg text-stone-200 uppercase tracking-widest -mt-1">2026 - 2027</h1>
-            </div>
-
-            <!-- View Mode Switcher -->
-            <div class="flex items-center space-x-1 bg-stone-900/90 p-1 rounded-full border border-goldLeaf/30">
-                <button id="btnSingle" onclick="setViewMode('single')" class="px-3 py-1 rounded-full text-xs font-serif transition-all bg-goldLeaf text-stone-950 font-bold shadow">
-                    Kort
-                </button>
-                <button id="btnList" onclick="setViewMode('list')" class="px-3 py-1 rounded-full text-xs font-serif transition-all text-stone-400 hover:text-stone-200">
-                    Hel Meny
-                </button>
-            </div>
+    <!-- Header Section -->
+    <header class="w-full py-5 px-4 text-center border-b border-gold-500/10 bg-neutral-950/60 backdrop-blur-md">
+        <div class="inline-flex items-center space-x-2">
+            <i class="fa-solid font-serif text-xl text-gold-400">🍾</i>
+            <h1 class="font-serif font-bold text-xl sm:text-2xl tracking-widest gold-gradient-text uppercase">Anetts champagnelista</h1>
         </div>
+        <p class="text-[10px] text-neutral-400 tracking-widest uppercase mt-0.5">2026 - 2027</p>
     </header>
 
-    <!-- Main Content Stage -->
-    <main class="flex-grow flex flex-col items-center justify-center p-3 sm:p-6 max-w-lg mx-auto w-full relative">
+    <!-- Main Content Container for Single Mobile Card View -->
+    <main class="flex-grow flex flex-col items-center justify-center p-4 max-w-md mx-auto w-full relative">
         
-        <!-- SINGLE CARD VIEW -->
-        <div id="singleView" class="w-full relative min-h-[580px] flex flex-col justify-between items-center">
-            
-            <div id="cardStage" class="w-full relative min-h-[520px] flex items-center justify-center">
-                <!-- Dynamically populated via JS -->
-            </div>
-
-            <!-- Mobile Slider Controls -->
-            <div class="w-full flex items-center justify-between mt-4 px-2">
-                <button id="prevBtn" onclick="prevCard()" class="w-11 h-11 rounded-full bg-stone-900 border border-goldLeaf/40 flex items-center justify-center text-goldLeaf hover:bg-goldLeaf hover:text-stone-950 transition-all active:scale-90 shadow-lg">
-                    <i class="fa-solid fa-chevron-left text-sm"></i>
-                </button>
-
-                <div class="text-center">
-                    <span id="cardCounter" class="font-serif text-base font-semibold tracking-widest text-goldLeaf block">1 / 12</span>
-                    <span class="handwritten text-lg text-stone-400 block -mt-1">Svep för nästa</span>
-                </div>
-
-                <button id="nextBtn" onclick="nextCard()" class="w-11 h-11 rounded-full bg-stone-900 border border-goldLeaf/40 flex items-center justify-center text-goldLeaf hover:bg-goldLeaf hover:text-stone-950 transition-all active:scale-90 shadow-lg">
-                    <i class="fa-solid fa-chevron-right text-sm"></i>
-                </button>
-            </div>
+        <!-- Card Stage Wrapper -->
+        <div id="cardStage" class="w-full relative min-h-[520px] sm:min-h-[560px] flex items-center justify-center">
+            <!-- Dynamic Single Card Content rendered via JavaScript -->
         </div>
 
-        <!-- FULL RESTAURANT MENU LIST VIEW -->
-        <div id="listView" class="w-full hidden space-y-6">
-            <div class="paper-card rounded-xl p-6 sm:p-8 relative">
-                <div class="corner-ornament corner-tl"></div>
-                <div class="corner-ornament corner-tr"></div>
-                <div class="corner-ornament corner-bl"></div>
-                <div class="corner-ornament corner-br"></div>
-                
-                <div class="text-center mb-8 border-b border-goldLeaf/30 pb-4">
-                    <span class="handwritten text-4xl text-goldLeaf block">L'Aboitement</span>
-                    <h2 class="font-serif text-2xl uppercase tracking-widest font-bold text-ink mt-1">Notre Sélection</h2>
-                    <p class="text-xs italic text-stone-600 mt-1">Handplockade champagner från framstående hus</p>
-                </div>
+        <!-- Navigation & Counter Controls -->
+        <div class="w-full flex items-center justify-between mt-5 px-2">
+            <button id="prevBtn" onclick="prevCard()" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-neutral-950 transition-all active:scale-90 border border-gold-500/30">
+                <i class="fa-solid fa-chevron-left text-base"></i>
+            </button>
 
-                <div id="listContainer" class="space-y-8">
-                    <!-- Dynamically rendered list view -->
-                </div>
+            <div class="flex flex-col items-center">
+                <span id="cardCounter" class="font-serif text-sm font-semibold tracking-widest text-gold-400">1 / 12</span>
+                <span class="text-[9px] uppercase tracking-wider text-neutral-500 mt-0.5">Svep för att bläddra</span>
             </div>
-        </div>
 
+            <button id="nextBtn" onclick="nextCard()" class="w-12 h-12 rounded-full glass-card flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-neutral-950 transition-all active:scale-90 border border-gold-500/30">
+                <i class="fa-solid fa-chevron-right text-base"></i>
+            </button>
+        </div>
     </main>
 
     <!-- Footer -->
-    <footer class="w-full py-4 px-4 text-center border-t border-goldLeaf/20 bg-neutral-950/80 backdrop-blur-md">
-        <span class="text-[11px] font-serif text-stone-400 tracking-widest">
-            &copy; 2026 Anett's Champagne List | Crafted with care and passion
-        </span>
+    <footer class="py-4 text-center border-t border-neutral-900 bg-neutral-950/80 text-[11px] text-neutral-500">
+        <p>Systembolagets artikelnummer anges som varunummer.</p>
     </footer>
 
+    <!-- JavaScript Application Logic -->
     <script>
         const champagnes = [
             {
@@ -188,7 +119,7 @@
                 producer: "Heidsieck & Co Monopole",
                 varunr: "55242",
                 iconType: "gold",
-                typeText: "Brut Tradition",
+                typeText: "Brut",
                 vintage: null,
                 description: "Heidsieck & Co Monopole grundades 1785 och är ett av Champagnes äldsta hus. Namnet ”Edition Jönköping” hyllar det svenska fartyget Jönköping som sänktes 1916 med husets champagne ombord, vilken bärgades 1998 i fantastiskt drickbart skick. Champagnen har en tillgänglig och fruktig stil med toner av gula äpplen, citrus, honung och kex.",
                 link: "https://www.heidsieck-monopole.com"
@@ -210,7 +141,7 @@
                 producer: "Louis Roederer",
                 varunr: "7602",
                 iconType: "gold",
-                typeText: "Brut Collection",
+                typeText: "Brut",
                 vintage: null,
                 description: "Louis Roederer grundades 1776 i Reims och hör till Champagnes mest hyllade oberoende hus. Collection 247 markerar husets 247:e skörd och bygger på en solera-liknande reservvinsmetod som ger stor komplexitet och konsistens. Champagnen bjuder på en nyanserad profil med toner av mogen citrus, rostat bröd, kritig mineralitet och en lång, krämig finish.",
                 link: "https://www.louis-roederer.com"
@@ -221,7 +152,7 @@
                 producer: "Champagne Henriot",
                 varunr: "77710",
                 iconType: "gold",
-                typeText: "Millésimé Brut",
+                typeText: "Millésimé",
                 vintage: "2015",
                 description: "Huset Henriot grundades 1808 i Reims av Apolline Henriot och är känt för sin höga andel Premier- och Grand Cru-druvor. Denna årgångschampagne speglar ett enskilt års unika skörd och har lagrats länge i husets källare. Resultatet är en fyllig och utvecklad champagne med toner av brioche, torkad frukt, hasselnötter och frisk citrus.",
                 link: "https://www.champagne-henriot.com"
@@ -268,7 +199,7 @@
                 typeText: "Brut",
                 vintage: null,
                 description: "Charles le Bel är ett andramärke skapat av det anrika huset Billecart-Salmon, vilket ger mycket hög vinmakarstandard till ett tillgängligt pris. Champagnen produceras under samma noggranna kvalitetstänk om elegans och renhet som moderhuset. Profilen är harmonisk med fräscha toner av vit frukt, citrus, brioche och fin bubblighet.",
-                link: "https://www.champagne-billecart.fr"
+                link: "https://www.champagne-billecart.com"
             },
             {
                 id: 10,
@@ -290,7 +221,7 @@
                 typeText: "Brut Réserve",
                 vintage: null,
                 description: "Billecart-Salmon grundades 1818 i Mareuil-sur-Aÿ och är världsberömt för sin eleganta stil och långsamma jäsningsprocess vid låg temperatur. Brut Réserve är husets ikoniska flaggskepp med en perfekt balanserad blend av Pinot Noir, Meunier och Chardonnay. Vinet är extremt raffinerat med toner av gröna äpplen, färsk brioche, vita blommor och en silkeslen textur.",
-                link: "https://www.champagne-billecart.fr"
+                link: "https://www.champagne-billecart.com"
             },
             {
                 id: 12,
@@ -306,37 +237,41 @@
         ];
 
         let currentIndex = 0;
-        let viewMode = 'single';
         let touchStartX = 0;
         let touchEndX = 0;
 
-        function getIconHTML(item) {
+        // Render Icon Container HTML
+        function getIconContainerHTML(item) {
             let containerBg = "";
+            let borderColor = "";
             let iconColor = "";
-            let tagStyle = "";
+            let tagClass = "";
 
             if (item.iconType === 'rose') {
-                containerBg = "bg-rose-100/70 border-rose-300";
-                iconColor = "text-rose-600";
-                tagStyle = "bg-rose-50 border-rose-200 text-rose-800";
+                containerBg = "bg-rose-950/30";
+                borderColor = "border-rose-500/40 shadow-[0_0_20px_rgba(244,63,94,0.15)]";
+                iconColor = "text-rose-400";
+                tagClass = "bg-rose-500/20 text-rose-300 border-rose-500/30";
             } else if (item.iconType === 'black') {
-                containerBg = "bg-stone-900 border-stone-800 shadow-inner";
-                iconColor = "text-amber-300";
-                tagStyle = "bg-stone-800 border-stone-700 text-stone-200";
-            } else { // Standard Gold
-                containerBg = "bg-amber-50/80 border-amber-200/80";
-                iconColor = "text-amber-700";
-                tagStyle = "bg-amber-100/60 border-amber-200 text-amber-900";
+                containerBg = "bg-neutral-900/90";
+                borderColor = "border-neutral-700/80 ring-1 ring-gold-500/30 shadow-[0_0_20px_rgba(0,0,0,0.6)]";
+                iconColor = "text-gold-400";
+                tagClass = "bg-neutral-800 text-neutral-300 border-neutral-700";
+            } else { // Regular Gold
+                containerBg = "bg-amber-950/20";
+                borderColor = "border-gold-500/40 shadow-[0_0_20px_rgba(234,179,8,0.15)]";
+                iconColor = "text-gold-400";
+                tagClass = "bg-gold-500/10 text-gold-400 border-gold-500/30";
             }
 
-            // Vintage Star Badge
+            // Star Badge for Vintage Wines
             let vintageBadge = "";
             if (item.vintage) {
                 vintageBadge = `
-                    <div class="absolute -top-3 -right-3 z-20">
-                        <div class="relative flex items-center justify-center w-12 h-12">
-                            <i class="fa-solid fa-star text-amber-500 text-4xl drop-shadow-md"></i>
-                            <span class="absolute font-serif font-bold text-[10px] text-stone-950 tracking-tighter">
+                    <div class="absolute -top-2.5 -right-2.5 z-20 bg-neutral-950 border border-gold-400 p-1.5 rounded-full shadow-xl flex items-center justify-center min-w-[44px] min-h-[44px]">
+                        <div class="relative flex items-center justify-center">
+                            <i class="fa-solid fa-star text-gold-400 text-2xl"></i>
+                            <span class="absolute inset-0 flex items-center justify-center font-bold text-[10px] text-neutral-950 font-sans tracking-tight">
                                 ${item.vintage}
                             </span>
                         </div>
@@ -345,172 +280,139 @@
             }
 
             return `
-                <div class="relative w-full py-4 rounded-xl ${containerBg} border flex flex-col items-center justify-center my-3 transition-all">
+                <div class="relative w-full h-44 rounded-2xl ${containerBg} border ${borderColor} flex flex-col items-center justify-center p-4 my-3">
                     ${vintageBadge}
-                    <div class="w-12 h-12 rounded-full border border-goldLeaf/30 flex items-center justify-center bg-white/50 mb-1 shadow-sm">
-                        <i class="fa-solid fa-wine-glass text-xl ${iconColor}"></i>
+                    
+                    <div class="w-16 h-16 rounded-full bg-neutral-950 border border-neutral-800 flex items-center justify-center mb-2 shadow-inner">
+                        <i class="fa-solid fa-wine-glass-empty text-3xl ${iconColor}"></i>
                     </div>
-                    <span class="text-[10px] font-serif uppercase tracking-widest px-3 py-0.5 rounded-full border ${tagStyle} font-semibold">
+
+                    <span class="px-3 py-0.5 rounded-full text-[10px] font-semibold border uppercase tracking-wider ${tagClass}">
                         ${item.typeText}
                     </span>
                 </div>
             `;
         }
 
+        // Render Active Card
         function renderCard() {
             const stage = document.getElementById('cardStage');
             const item = champagnes[currentIndex];
 
             stage.innerHTML = `
-                <div id="activeCard" class="paper-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between w-full h-full page-transition opacity-100 scale-100">
-                    <div class="corner-ornament corner-tl"></div>
-                    <div class="corner-ornament corner-tr"></div>
-                    <div class="corner-ornament corner-bl"></div>
-                    <div class="corner-ornament corner-br"></div>
-
-                    <div class="inner-frame p-4 flex flex-col justify-between h-full">
-                        <div>
-                            <!-- Top metadata -->
-                            <div class="flex items-center justify-between border-b border-goldLeaf/20 pb-2 mb-2">
-                                <span class="font-serif text-[11px] uppercase tracking-widest text-stone-500">
-                                    Varunr: <strong class="text-stone-900 font-semibold">${item.varunr}</strong>
-                                </span>
-                                <span class="handwritten text-xl text-goldLeaf">N° ${currentIndex + 1}</span>
-                            </div>
-
-                            <!-- Producer & Name -->
-                            <div class="text-center my-2">
-                                <p class="text-[11px] font-serif uppercase tracking-widest text-goldLeaf font-semibold">${item.producer}</p>
-                                <h2 class="font-serif text-xl sm:text-2xl font-bold text-ink mt-0.5 leading-tight">
-                                    ${item.fullTitle}
-                                </h2>
-                            </div>
-
-                            <!-- Visual Icon -->
-                            ${getIconHTML(item)}
-
-                            <!-- Description in elegance style -->
-                            <p class="text-xs sm:text-sm text-stone-700 leading-relaxed font-serif italic text-center px-1 mt-2">
-                                "${item.description}"
-                            </p>
+                <div id="activeCard" class="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between w-full h-full card-transition opacity-100 scale-100">
+                    <div>
+                        <!-- Header with Varunr & Vintage tag -->
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-mono tracking-widest text-neutral-400 uppercase bg-neutral-900/90 px-3 py-1 rounded-lg border border-neutral-800">
+                                Varunr: <strong class="text-gold-400 font-semibold">${item.varunr}</strong>
+                            </span>
+                            ${item.vintage ? `<span class="text-xs font-serif text-gold-300 font-bold tracking-wider">Årgång ${item.vintage}</span>` : ''}
                         </div>
 
-                        <!-- Producer link -->
-                        <div class="mt-4 pt-3 border-t border-goldLeaf/20 text-center">
-                            <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-serif uppercase tracking-widest font-semibold text-stone-800 hover:text-goldLeaf transition-colors group">
-                                <span>Besök ${item.producer}</span>
-                                <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
-                            </a>
+                        <!-- Bottle Icon Representation -->
+                        ${getIconContainerHTML(item)}
+
+                        <!-- Producer & Name -->
+                        <div class="mt-4">
+                            <p class="text-[11px] font-medium text-neutral-400 uppercase tracking-widest">${item.producer}</p>
+                            <h2 class="font-serif text-xl sm:text-2xl font-bold text-neutral-100 mt-1 leading-tight gold-gradient-text">
+                                ${item.fullTitle}
+                            </h2>
                         </div>
+
+                        <!-- Description -->
+                        <p class="text-xs text-neutral-300 mt-3 leading-relaxed font-normal">
+                            ${item.description}
+                        </p>
+                    </div>
+
+                    <!-- Direct Link Button -->
+                    <div class="mt-6 pt-4 border-t border-neutral-800/80">
+                        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 rounded-xl bg-neutral-900 hover:bg-gold-500 text-neutral-200 hover:text-neutral-950 font-semibold text-xs tracking-wider transition-all duration-200 border border-neutral-800 hover:border-gold-500 flex items-center justify-center gap-2 group shadow-lg">
+                            <span>Besök Producent</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                        </a>
                     </div>
                 </div>
             `;
 
+            // Update Counter Text
             document.getElementById('cardCounter').innerText = `${currentIndex + 1} / ${champagnes.length}`;
 
-            // Add swipe touch handlers
+            // Add Swipe Touch Event Listeners to Card
             const cardEl = document.getElementById('activeCard');
-            if (cardEl) {
-                cardEl.addEventListener('touchstart', handleTouchStart, { passive: true });
-                cardEl.addEventListener('touchend', handleTouchEnd, { passive: true });
-            }
-        }
-
-        function renderListView() {
-            const container = document.getElementById('listContainer');
-            container.innerHTML = champagnes.map((item, idx) => `
-                <div class="border-b border-goldLeaf/20 pb-6 last:border-0 last:pb-0">
-                    <div class="flex items-start justify-between gap-3">
-                        <div>
-                            <span class="text-[10px] uppercase font-serif tracking-widest text-goldLeaf font-semibold">${item.producer}</span>
-                            <h3 class="font-serif text-lg font-bold text-ink leading-snug">${item.fullTitle}</h3>
-                        </div>
-                        <span class="text-xs font-serif text-stone-500 bg-stone-200/60 px-2 py-1 rounded border border-stone-300 whitespace-nowrap">
-                            Varunr: ${item.varunr}
-                        </span>
-                    </div>
-
-                    ${getIconHTML(item)}
-
-                    <p class="text-xs text-stone-700 font-serif italic leading-relaxed mt-2">
-                        ${item.description}
-                    </p>
-
-                    <div class="mt-3 text-right">
-                        <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="text-[11px] font-serif uppercase tracking-widest text-stone-700 hover:text-goldLeaf inline-flex items-center gap-1 font-semibold">
-                            <span>Hemsida</span>
-                            <i class="fa-solid fa-angle-right text-[10px]"></i>
-                        </a>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function setViewMode(mode) {
-            viewMode = mode;
-            const singleView = document.getElementById('singleView');
-            const listView = document.getElementById('listView');
-            const btnSingle = document.getElementById('btnSingle');
-            const btnList = document.getElementById('btnList');
-
-            if (mode === 'single') {
-                singleView.classList.remove('hidden');
-                listView.classList.add('hidden');
-                btnSingle.className = "px-3 py-1 rounded-full text-xs font-serif transition-all bg-goldLeaf text-stone-950 font-bold shadow";
-                btnList.className = "px-3 py-1 rounded-full text-xs font-serif transition-all text-stone-400 hover:text-stone-200";
-            } else {
-                singleView.classList.add('hidden');
-                listView.classList.remove('hidden');
-                btnList.className = "px-3 py-1 rounded-full text-xs font-serif transition-all bg-goldLeaf text-stone-950 font-bold shadow";
-                btnSingle.className = "px-3 py-1 rounded-full text-xs font-serif transition-all text-stone-400 hover:text-stone-200";
-                renderListView();
-            }
+            cardEl.addEventListener('touchstart', handleTouchStart, { passive: true });
+            cardEl.addEventListener('touchend', handleTouchEnd, { passive: true });
         }
 
         function nextCard() {
-            animateTransition('left', () => {
-                currentIndex = (currentIndex + 1) % champagnes.length;
-                renderCard();
-            });
+            if (currentIndex < champagnes.length - 1) {
+                animateTransition('left', () => {
+                    currentIndex++;
+                    renderCard();
+                });
+            } else {
+                animateTransition('left', () => {
+                    currentIndex = 0;
+                    renderCard();
+                });
+            }
         }
 
         function prevCard() {
-            animateTransition('right', () => {
-                currentIndex = (currentIndex - 1 + champagnes.length) % champagnes.length;
-                renderCard();
-            });
+            if (currentIndex > 0) {
+                animateTransition('right', () => {
+                    currentIndex--;
+                    renderCard();
+                });
+            } else {
+                animateTransition('right', () => {
+                    currentIndex = champagnes.length - 1;
+                    renderCard();
+                });
+            }
         }
 
-        function animateTransition(dir, cb) {
+        function animateTransition(direction, callback) {
             const card = document.getElementById('activeCard');
-            if (!card) return cb();
+            if (!card) return callback();
 
-            const offset = dir === 'left' ? '-30px' : '30px';
-            card.style.transform = `translateX(${offset}) scale(0.97)`;
+            const xOffset = direction === 'left' ? '-40px' : '40px';
+            card.style.transform = `translateX(${xOffset}) scale(0.95)`;
             card.style.opacity = '0';
 
             setTimeout(() => {
-                cb();
+                callback();
             }, 180);
         }
 
+        // Swipe Touch Handlers
         function handleTouchStart(e) {
             touchStartX = e.changedTouches[0].screenX;
         }
 
         function handleTouchEnd(e) {
             touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 40) nextCard();
-            if (touchEndX - touchStartX > 40) prevCard();
+            handleSwipe();
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (viewMode === 'single') {
-                if (e.key === 'ArrowRight') nextCard();
-                if (e.key === 'ArrowLeft') prevCard();
+        function handleSwipe() {
+            const swipeThreshold = 40;
+            if (touchStartX - touchEndX > swipeThreshold) {
+                nextCard(); // Swiped left -> next
+            } else if (touchEndX - touchStartX > swipeThreshold) {
+                prevCard(); // Swiped right -> prev
             }
+        }
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextCard();
+            if (e.key === 'ArrowLeft') prevCard();
         });
 
+        // Initialize App
         window.onload = function() {
             renderCard();
         };
